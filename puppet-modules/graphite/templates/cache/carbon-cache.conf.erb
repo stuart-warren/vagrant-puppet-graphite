@@ -1,0 +1,162 @@
+#
+# Managed by PUPPET! - graphite::cache
+#
+# see /var/lib/graphite/conf$/carbon.conf.example for docs
+
+<% @instance_name.to_enum.with_index.each do |instance,i| -%>
+################### <%= instance.to_str %> ###################
+<%= instance.to_str.eql?("default") ? "[cache]" : "[cache:" + instance.to_str + "]" %>
+
+ROOT_DIR       = /var/lib/graphite/
+
+STORAGE_DIR    = <%= @storage_dir[i] ||
+					 @storage_dir[0] ||
+					 @storage_dir %>
+LOCAL_DATA_DIR = <%= @local_data_dir[i] ||
+					 @local_data_dir[0] ||
+					 @local_data_dir %>
+WHITELISTS_DIR = <%= @whitelists_dir[i] ||
+					 @whitelists_dir[0] ||
+					 @whitelists_dir %>
+CONF_DIR       = <%= @conf_dir[i] || 
+					 @conf_dir[0] ||
+					 @conf_dir%>
+LOG_DIR        = <%= @log_dir[i] ||
+					 @log_dir[0] ||
+					 @log_dir %>
+PID_DIR        = <%= @pid_dir[i] ||
+					 @pid_dir[0] ||
+					 @pid_dir %>
+
+USER = <%= @user[i] ||
+		   @user[0] ||
+		   @user %>
+
+MAX_CACHE_SIZE = <%= @max_cache_size[i] ||
+					 @max_cache_size[0] ||
+					 @max_cache_size %>
+
+MAX_UPDATES_PER_SECOND = <%= @max_updates_per_second[i] ||
+							 @max_updates_per_second[0] ||
+							 @max_updates_per_second %>
+
+MAX_CREATES_PER_MINUTE = <%= @max_creates_per_minute[i] ||
+							 @max_creates_per_minute[0] ||
+							 @max_creates_per_minute %>
+
+LINE_RECEIVER_INTERFACE = <%= @line_receiver_interface[i] ||
+							  @line_receiver_interface[0] || 
+						      @line_receiver_interface %>
+LINE_RECEIVER_PORT = <%= @line_receiver_port[i] ||
+						 @line_receiver_port[0] ||
+						 @line_receiver_port %>
+
+ENABLE_UDP_LISTENER = <%= @enable_udp_listener[i] ||
+						  @enable_udp_listener[0] ||
+						  @enable_udp_listener %>
+UDP_RECEIVER_INTERFACE = <%= @udp_receiver_interface[i] ||
+							 @udp_receiver_interface[0] ||
+							 @udp_receiver_interface %>
+UDP_RECEIVER_PORT = <%= @udp_receiver_port[i] ||
+						@udp_receiver_port[0] ||
+						@udp_receiver_port %>
+
+PICKLE_RECEIVER_INTERFACE = <%= @pickle_receiver_interface[i] ||
+								@pickle_receiver_interface[0] ||
+								@pickle_receiver_interface %>
+PICKLE_RECEIVER_PORT = <%= @pickle_receiver_port[i] ||
+						   @pickle_receiver_port[0] ||
+						   @pickle_receiver_port %>
+
+USE_INSECURE_UNPICKLER = <%= @use_insecure_unpickler[i] ||
+							 @use_insecure_unpickler[0] ||
+							 @use_insecure_unpickler %>
+
+CACHE_QUERY_INTERFACE = <%= @cache_query_interface[i] ||
+							@cache_query_interface[0] ||
+							@cache_query_interface %>
+CACHE_QUERY_PORT = <%= @cache_query_port[i] ||
+					   @cache_query_port[0] ||
+					   @cache_query_port %>
+
+USE_FLOW_CONTROL = <%= @use_flow_control[i] ||
+					   @use_flow_control[0] ||
+					   @use_flow_control %>
+
+LOG_UPDATES = <%= @log_updates[i] ||
+				  @log_updates[0] ||
+				  @log_updates %>
+
+WHISPER_AUTOFLUSH = <%= @whisper_autoflush[i] ||
+					    @whisper_autoflush[0] ||
+					    @whisper_autoflush %>
+
+WHISPER_SPARSE_CREATE = <%= @whisper_sparse_create[i] ||
+							@whisper_sparse_create[0] ||
+							@whisper_sparse_create %>
+
+WHISPER_LOCK_WRITES = <%= @whisper_lock_writes[i] ||
+						  @whisper_lock_writes[0] ||
+						  @whisper_lock_writes %>
+
+USE_WHITELIST = <%= @use_whitelist[i] ||
+					@use_whitelist[0] ||
+					@use_whitelist %>
+
+CARBON_METRIC_PREFIX = <%= @carbon_metric_prefix[i] ||
+						   @carbon_metric_prefix[0] ||
+						   @carbon_metric_prefix %>
+CARBON_METRIC_INTERVAL = <%= @carbon_metric_interval[i] ||
+							 @carbon_metric_interval[0] ||
+							 @carbon_metric_interval %>
+
+ENABLE_AMQP = <%= @enable_amqp[i] ||
+				  @enable_amqp[0] ||
+				  @enable_amqp %>
+
+AMQP_VERBOSE = <%= @amqp_verbose[i] ||
+				   @amqp_verbose[0] ||
+				   @amqp_verbose %>
+AMQP_HOST = <%= @amqp_host[i] ||
+				@amqp_host[0] ||
+				@amqp_host %>
+AMQP_PORT = <%= @amqp_port[i] ||
+				@amqp_port[0] ||
+				@amqp_port %>
+AMQP_VHOST = <%= @amqp_vhost[i] ||
+				 @amqp_vhost[0] ||
+				 @amqp_vhost %>
+AMQP_USER = <%= @amqp_user[i] ||
+				@amqp_user[0] ||
+				@amqp_user %>
+AMQP_PASSWORD = <%= @amqp_password[i] ||
+					@amqp_password[0] ||
+					@amqp_password %>
+AMQP_EXCHANGE = <%= @amqp_exchange[i] ||
+					@amqp_exchange[0] ||
+					@amqp_exchange %>
+AMQP_METRIC_NAME_IN_BODY = <%= @amqp_metric_name_in_body[i] ||
+							   @amqp_metric_name_in_body[0] ||
+							   @amqp_metric_name_in_body %>
+
+ENABLE_MANHOLE = <%= @enable_manhole[i] ||
+					 @enable_manhole[0] ||
+					 @enable_manhole %>
+MANHOLE_INTERFACE = <%= @manhole_interface[i] ||
+						@manhole_interface[0] ||
+						@manhole_interface %>
+MANHOLE_PORT = <%= @manhole_port[i] ||
+				   @manhole_port[0] ||
+				   @manhole_port %>
+MANHOLE_USER = <%= @manhole_user[i] ||
+				   @manhole_user[0] ||
+				   @manhole_user %>
+MANHOLE_PUBLIC_KEY = <%= @manhole_public_key[i] ||
+						 @manhole_public_key[0] ||
+						 @manhole_public_key %>
+
+BIND_PATTERNS = <%= @bind_patterns[i] ||
+					@bind_patterns[0] ||
+					@bind_patterns %>
+
+<% end -%>

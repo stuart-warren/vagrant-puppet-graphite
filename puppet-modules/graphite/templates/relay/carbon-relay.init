@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# Managed by PUPPET - graphite::relay
+#
+# Carbon - part of the graphite project
+# <%= @title %> instance
+# 
+
+CARBON_RELAY_CONFIG="<%= @conf_file %>"
+
+case "$1" in
+	start)
+		<% @instance_name.each do |i| -%>
+		/usr/bin/python /usr/bin/carbon-relay.py --config=${CARBON_RELAY_CONFIG} --instance=<%= i %> start 
+		<% end -%>
+		;;
+	stop)
+		<% @instance_name.each do |i| -%>
+  		/usr/bin/python /usr/bin/carbon-relay.py --config=${CARBON_RELAY_CONFIG} --instance=<%= i %> stop
+  		<% end -%>
+  		;;
+  	*)
+  		echo "Usage $0 start|stop"
+esac
+

@@ -1,0 +1,67 @@
+#
+# Managed by PUPPET! - graphite::relay
+#
+# see /var/lib/graphite/conf$/carbon.conf.example for docs
+
+<% @instance_name.to_enum.with_index.each do |instance,i| -%>
+################### <%= instance.to_str %> ###################
+<%= instance.to_str.eql?("default") ? "[relay]" : "[relay:" + instance.to_str + "]" %>
+
+STORAGE_DIR    = <%= @storage_dir[i] ||
+					 @storage_dir[0] ||
+					 @storage_dir %>
+LOCAL_DATA_DIR = <%= @local_data_dir[i] ||
+					 @local_data_dir[0] ||
+					 @local_data_dir %>
+WHITELISTS_DIR = <%= @whitelists_dir[i] ||
+					 @whitelists_dir[0] ||
+					 @whitelists_dir %>
+CONF_DIR       = <%= @conf_dir[i] || 
+					 @conf_dir[0] ||
+					 @conf_dir%>
+LOG_DIR        = <%= @log_dir[i] ||
+					 @log_dir[0] ||
+					 @log_dir %>
+PID_DIR        = <%= @pid_dir[i] ||
+					 @pid_dir[0] ||
+					 @pid_dir %>
+
+USER = <%= @user[i] ||
+		   @user[0] ||
+		   @user %>
+		   
+LINE_RECEIVER_INTERFACE = <%= @line_receiver_interface[i] ||
+							  @line_receiver_interface[0] %>
+LINE_RECEIVER_PORT = <%= @line_receiver_port[i] ||
+ 						 @line_receiver_port[0] %>
+PICKLE_RECEIVER_INTERFACE = <%= @pickle_receiver_interface[i] ||
+								@pickle_receiver_interface[0] %>
+PICKLE_RECEIVER_PORT = <%= @pickle_receiver_port[i] ||
+						   @pickle_receiver_port[0] %>
+
+RELAY_METHOD = <%= @relay_method[i] ||
+				   @relay_method[0] %>
+
+REPLICATION_FACTOR = <%= @replication_factor[i] ||
+						 @replication_factor[0] %>
+
+DESTINATIONS = <%= @destinations[i].join(', ') ||
+				   @destinations[0].join(', ') %>
+
+MAX_DATAPOINTS_PER_MESSAGE = <%= @max_datapoints_per_message[i] ||
+								 @max_datapoints_per_message[0] %>
+MAX_QUEUE_SIZE = <%= @max_queue_size[i] ||
+					 @max_queue_size[0] %>
+
+USE_FLOW_CONTROL = <%= @use_flow_control[i] ||
+					   @use_flow_control[0] %>
+
+USE_WHITELIST = <%= @use_whitelist[i] ||
+					@use_whitelist[0] %>
+
+CARBON_METRIC_PREFIX = <%= @carbon_metric_prefix[i] ||
+						   @carbon_metric_prefix[0] %>
+CARBON_METRIC_INTERVAL = <%= @carbon_metric_interval[i] ||
+							 @carbon_metric_interval[0] %>
+
+<% end -%>
