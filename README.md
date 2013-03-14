@@ -13,8 +13,8 @@ Carbon daemons can be started with
 Currently you will need to supply your own .debs which mostly install to /var/lib/graphite/ rather than /opt/graphite/
 
 TODO:
-- [x] 1. Make carbon-relay do the same as carbon-cache #1
-- [x] 2. Finish the graphite-web classes so they can be customised #2
-- [x] 3. Remove unneeded start scripts #3
-- [ ] 4. Investigate upstart not using --debug to start carbon-cache without loosing pid
-- [ ] 5. Upload debs somewhere
+- [x] Make carbon-relay do the same as carbon-cache #1
+- [x] Finish the graphite-web classes so they can be customised #2
+- [x] Remove unneeded start scripts #3
+- [ ] Investigate upstart not using --debug to start carbon-cache without loosing pid
+- [ ] Upload debs somewhere
