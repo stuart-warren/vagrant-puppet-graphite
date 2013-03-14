@@ -1,4 +1,4 @@
+deb http://ithfdz01.ocado.com/ubuntu/ precise dsi
 deb-src http://ithfdz01.ocado.com/ubuntu/ precise dsi
 #deb http://192.168.33.10/ubuntu/ precise dsi
-
-deb http://192.168.0.101/~apt/ubuntu/ precise dsi
+#deb http://192.168.0.101/~apt/ubuntu/ precise dsi

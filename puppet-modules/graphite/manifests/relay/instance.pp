@@ -25,7 +25,9 @@ define graphite::relay::instance (
 
     include graphite::cache::install
 
-    file { "${title}-relay-conf_file":
+    $vip = $title
+
+    file { "${vip}-relay-conf_file":
         ensure    => present,
         path      => $conf_file,
         owner     => 'root',
@@ -34,7 +36,7 @@ define graphite::relay::instance (
         require   => Package['python-carbon'],
     }
 
-    file { "${title}-relay-rules.conf":
+    file { "${vip}-relay-rules.conf":
         ensure    => present,
         path      => "${conf_dir}relay-rules.conf",
         owner     => root,
@@ -43,12 +45,17 @@ define graphite::relay::instance (
         require   => Package['python-carbon'],
     }
 
-    file { "${title}-relay-init-script":
+    file { "${vip}-relay-init-script":
         ensure    => present,
-        path      => "/usr/local/sbin/carbon-relay-${title}.sh",
+        path      => "/usr/local/sbin/carbon-relay-${vip}.sh",
         owner     => 'root',
         group     => 'root',
         mode      => '0755',
         content   => template('graphite/relay/carbon-relay.init'),
+    }
+
+    graphite::relay::relay_service{ $instance_name:
+        vip       => $vip,
+        require   => File["${vip}-local-data-dir"],
     }
 }
