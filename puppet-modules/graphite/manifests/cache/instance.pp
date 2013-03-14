@@ -86,5 +86,4 @@ define graphite::cache::instance (
         require   => File["${vip}-local-data-dir"],
     }
 
-
 }

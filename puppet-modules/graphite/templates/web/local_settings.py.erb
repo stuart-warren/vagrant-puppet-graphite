@@ -9,21 +9,21 @@
 # Set your local timezone (Django's default is America/Chicago)
 # If your graphs appear to be offset by a couple hours then this probably
 # needs to be explicitly set to your local timezone.
-TIME_ZONE = 'Europe/London'
+TIME_ZONE = '<%= @timezone %>'
 
 # Override this to provide documentation specific to your Graphite deployment
-#DOCUMENTATION_URL = "http://graphite.readthedocs.org/"
+DOCUMENTATION_URL = "<%= @documentation_url %>"
 
 # Logging
-#LOG_RENDERING_PERFORMANCE = True
-#LOG_CACHE_PERFORMANCE = True
-#LOG_METRIC_ACCESS = True
+LOG_RENDERING_PERFORMANCE = <%= @log_rendering_performance %>
+LOG_CACHE_PERFORMANCE = <%= @log_cache_performance %>
+LOG_METRIC_ACCESS = <%= @log_metric_access %>
 
 # Enable full debug page display on exceptions (Internal Server Error pages)
-#DEBUG = True
+DEBUG = <%= @debug_error_pages %>
 
 # If using RRD files and rrdcached, set to the address or socket of the daemon
-#FLUSHRRDCACHED = 'unix:/var/run/rrdcached.sock'
+FLUSHRRDCACHED = '<%= @flush_rrd_cached %>'
 
 # This lists the memcached servers that will be used by this webapp.
 # If you have a cluster of webapps you should ensure all of them
@@ -34,8 +34,8 @@ TIME_ZONE = 'Europe/London'
 # You should not use the loopback address (127.0.0.1) here if using clustering
 # as every webapp in the cluster should use the exact same values to prevent
 # unneeded cache misses. Set to [] to disable caching of images and fetched data
-#MEMCACHE_HOSTS = ['10.10.10.10:11211', '10.10.10.11:11211', '10.10.10.12:11211']
-#DEFAULT_CACHE_DURATION = 60 # Cache images and data for 1 minute
+MEMCACHE_HOSTS = [<%= @memcache_hosts.collect{|x| '"' + x + '"'}.join(', ') %>]
+DEFAULT_CACHE_DURATION = <%= @memcache_default_duration %> # Cache images and data for 1 minute
 
 
 #####################################
@@ -48,24 +48,24 @@ TIME_ZONE = 'Europe/London'
 # Most installs done outside of a separate tree such as /opt/graphite will only
 # need to change these three settings. Note that the default settings for each
 # of these is relative to GRAPHITE_ROOT
-CONF_DIR = '/var/lib/graphite/conf'
-STORAGE_DIR = '/var/lib/graphite/storage'
-CONTENT_DIR = '/var/lib/graphite/webapp/content'
+CONF_DIR = '<%= @conf_dir %>'
+STORAGE_DIR = '<%= @storage_dir %>'
+CONTENT_DIR = '<%= @content_dir %>'
 
 # To further or fully customize the paths, modify the following. Note that the
 # default settings for each of these are relative to CONF_DIR and STORAGE_DIR
 #
 ## Webapp config files
-#DASHBOARD_CONF = '/opt/graphite/conf/dashboard.conf'
-#GRAPHTEMPLATES_CONF = '/opt/graphite/conf/graphTemplates.conf'
+DASHBOARD_CONF = '<%= @dashboard_conf %>'
+GRAPHTEMPLATES_CONF = '<%= @graph_templates_conf %>'
 
 ## Data directories
 # NOTE: If any directory is unreadable in DATA_DIRS it will break metric browsing
-WHISPER_DIR = '/var/lib/graphite/storage/whisper'
-RRD_DIR = '/var/lib/graphite/storage/rrd'
-DATA_DIRS = [WHISPER_DIR, RRD_DIR] # Default: set from the above variables
-LOG_DIR = '/var/lib/graphite/storage/log/webapp'
-INDEX_FILE = '/var/lib/graphite/storage/index'  # Search index file
+WHISPER_DIR = '<%= @whisper_dir %>'
+RRD_DIR = '<%= @rrd_dir %>'
+DATA_DIRS = [<%= @data_dirs.collect{|x| '"' + x + '"'}.join(', ') %>] # Default: set from the above variables
+LOG_DIR = '<%= @log_dir %>'
+INDEX_FILE = '<%= @index_file %>'  # Search index file
 
 
 #####################################
@@ -73,12 +73,12 @@ INDEX_FILE = '/var/lib/graphite/storage/index'  # Search index file
 #####################################
 # This is used for emailing rendered Graphs
 # Default backend is SMTP
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_HOST = 'localhost'
-#EMAIL_PORT = 25
-#EMAIL_HOST_USER = ''
-#EMAIL_HOST_PASSWORD = ''
-#EMAIL_USE_TLS = False
+EMAIL_BACKEND = '<%= @email_backend %>'
+EMAIL_HOST = '<%= @email_host %>'
+EMAIL_PORT = <%= @email_port %>
+EMAIL_HOST_USER = '<%= @email_host_user %>'
+EMAIL_HOST_PASSWORD = '<%= @email_host_password %>'
+EMAIL_USE_TLS = <%= @email_use_tls %>
 # To drop emails on the floor, enable the Dummy backend:
 #EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
@@ -87,15 +87,15 @@ INDEX_FILE = '/var/lib/graphite/storage/index'  # Search index file
 # Authentication Configuration #
 #####################################
 ## LDAP / ActiveDirectory authentication setup
-#USE_LDAP_AUTH = True
+USE_LDAP_AUTH = <%= @use_ldap_auth %>
 #LDAP_SERVER = "ldap.mycompany.com"
 #LDAP_PORT = 389
 #	OR
-#LDAP_URI = "ldaps://ldap.mycompany.com:636"
-#LDAP_SEARCH_BASE = "OU=users,DC=mycompany,DC=com"
-#LDAP_BASE_USER = "CN=some_readonly_account,DC=mycompany,DC=com"
-#LDAP_BASE_PASS = "readonly_account_password"
-#LDAP_USER_QUERY = "(username=%s)"  #For Active Directory use "(sAMAccountName=%s)"
+LDAP_URI = "<%= @ldap_uri %>"
+LDAP_SEARCH_BASE = "<%= @ldap_search_base %>"
+LDAP_BASE_USER = "<%= @ldap_base_user %>"
+LDAP_BASE_PASS = "<%= @ldap_base_password %>"
+LDAP_USER_QUERY = "<%= @ldap_user_query %>"  #For Active Directory use "(sAMAccountName=%s)"
 #
 # If you want to further customize the ldap connection options you should
 # directly use ldap.set_option to set the ldap module's global options.
@@ -109,10 +109,10 @@ INDEX_FILE = '/var/lib/graphite/storage/index'  # Search index file
 # See http://www.python-ldap.org/ for further details on these options.
 
 ## REMOTE_USER authentication. See: https://docs.djangoproject.com/en/dev/howto/auth-remote-user/
-#USE_REMOTE_USER_AUTHENTICATION = True
+USE_REMOTE_USER_AUTHENTICATION = <%= @use_remote_user_auth %>
 
 # Override the URL for the login link (e.g. for django_openid_auth)
-#LOGIN_URL = '/account/login'
+LOGIN_URL = '<%= @login_url %>'
 
 
 ##########################
@@ -138,16 +138,16 @@ INDEX_FILE = '/var/lib/graphite/storage/index'  # Search index file
 #
 # Users with Django 1.2 or greater should use the new dictionary
 # specification as the old database specification style is removed in 1.4
-#DATABASES = {
-#    'default': {
-#        'NAME': '/opt/graphite/storage/graphite.db',
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'USER': '',
-#        'PASSWORD': '',
-#        'HOST': '',
-#        'PORT': ''
-#    }
-#}
+DATABASES = {
+    'default': {
+        'NAME': '<%= @db_name %>',
+        'ENGINE': '<%= @db_engine %>',
+        'USER': '<%= @db_user %>',
+        'PASSWORD': '<%= @db_password %>',
+        'HOST': '<%= @db_host %>',
+        'PORT': '<%= @db_port %>'
+    }
+}
 #
 # Users still on Django 1.1 must use the old method instead:
 #DATABASE_ENGINE = 'django.db.backends.mysql'
@@ -167,22 +167,22 @@ INDEX_FILE = '/var/lib/graphite/storage/index'  # Search index file
 # remote server in the cluster. These servers must each have local access to
 # metric data. Note that the first server to return a match for a query will be
 # used.
-#CLUSTER_SERVERS = ["10.0.2.2:80", "10.0.2.3:80"]
+CLUSTER_SERVERS = [<%= @cluster_servers.collect{|x| '"' + x + '"'}.join(', ') %>]
 
 ## These are timeout values (in seconds) for requests to remote webapps
-#REMOTE_STORE_FETCH_TIMEOUT = 6   # Timeout to fetch series data
-#REMOTE_STORE_FIND_TIMEOUT = 2.5  # Timeout for metric find requests
-#REMOTE_STORE_RETRY_DELAY = 60    # Time before retrying a failed remote webapp
-#REMOTE_FIND_CACHE_DURATION = 300 # Time to cache remote metric find results
+REMOTE_STORE_FETCH_TIMEOUT = <%= @cluster_fetch_timeout %>   # Timeout to fetch series data
+REMOTE_STORE_FIND_TIMEOUT = <%= @cluster_find_timeout %>  # Timeout for metric find requests
+REMOTE_STORE_RETRY_DELAY = <%= @cluster_retry_delay %>    # Time before retrying a failed remote webapp
+REMOTE_FIND_CACHE_DURATION = <%= @cluster_cache_duration %> # Time to cache remote metric find results
 
 ## Remote rendering settings
 # Set to True to enable rendering of Graphs on a remote webapp
-#REMOTE_RENDERING = True
+REMOTE_RENDERING = <%= @remote_rendering %>
 # List of IP (and optionally port) of the webapp on each remote server that
 # will be used for rendering. Note that each rendering host should have local
 # access to metric data or should have CLUSTER_SERVERS configured
-#RENDERING_HOSTS = []
-#REMOTE_RENDER_CONNECT_TIMEOUT = 1.0
+RENDERING_HOSTS = [<%= @remote_rendering_hosts.collect{|x| '"' + x + '"'}.join(', ') %>]
+REMOTE_RENDER_CONNECT_TIMEOUT = <%= @remote_render_con_timeout %>
 
 # If you are running multiple carbon-caches on this machine (typically behind a relay using
 # consistent hashing), you'll need to list the ip address, cache query port, and instance name of each carbon-cache
@@ -190,8 +190,8 @@ INDEX_FILE = '/var/lib/graphite/storage/index'  # Search index file
 # and a common scheme is to use 7102 for instance b, 7202 for instance c, etc.
 #
 # You *should* use 127.0.0.1 here in most cases
-#CARBONLINK_HOSTS = ["127.0.0.1:7002:a", "127.0.0.1:7102:b", "127.0.0.1:7202:c"]
-#CARBONLINK_TIMEOUT = 1.0
+CARBONLINK_HOSTS = [<%= @local_carbon_instances.collect{|x| '"' + x + '"'}.join(', ') %>]
+CARBONLINK_TIMEOUT = <%= @local_carbon_timeout %>
 
 #####################################
 # Additional Django Settings #

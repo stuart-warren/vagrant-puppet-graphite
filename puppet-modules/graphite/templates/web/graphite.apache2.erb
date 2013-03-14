@@ -1,6 +1,9 @@
+#
+# Managed by PUPPET - graphite::web::apache_install
+#
 # This needs to be in your server's config somewhere, probably
 # the main httpd.conf
-# NameVirtualHost *:80
+# NameVirtualHost <%= @name_virtual_host %>
 
 # This line also needs to be in your server's config.
 # LoadModule wsgi_module modules/mod_wsgi.so
@@ -17,27 +20,27 @@
 
 # XXX You need to set this up!
 # Read http://code.google.com/p/modwsgi/wiki/ConfigurationDirectives#WSGISocketPrefix
-WSGISocketPrefix run/wsgi
+WSGISocketPrefix <%= @wsgi_socket_prefix %>
 
-<VirtualHost *:80>
-        ServerName graphite
-        DocumentRoot "/var/lib/graphite/webapp"
-        ErrorLog /var/lib/graphite/storage/log/webapp/error.log
-        CustomLog /var/lib/graphite/storage/log/webapp/access.log common
+<VirtualHost <%= @name_virtual_host %>>
+        ServerName <%= @server_name %>
+        DocumentRoot "<%= @document_root %>"
+        ErrorLog <%= @error_log %>
+        CustomLog <%= @custom_log %>
 
         # I've found that an equal number of processes & threads tends
         # to show the best performance for Graphite (ymmv).
-        WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120
-        WSGIProcessGroup graphite
-        WSGIApplicationGroup %{GLOBAL}
-        WSGIImportScript /var/lib/graphite/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
+        WSGIDaemonProcess <%= @wsgi_daemon_process %>
+        WSGIProcessGroup <%= @wsgi_process_group %>
+        WSGIApplicationGroup <%= @wsgi_application_group %>
+        WSGIImportScript <%= @wsgi_import_script %> process-group=<%= @wsgi_process_group %> application-group=<%= @wsgi_application_group %>
 
         # XXX You will need to create this file! There is a graphite.wsgi.example
         # file in this directory that you can safely use, just copy it to graphite.wgsi
-        WSGIScriptAlias / /var/lib/graphite/conf/graphite.wsgi 
+        WSGIScriptAlias <%= @wsgi_script_alias %> <%= @wsgi_import_script %> 
 
-        Alias /content/ /var/lib/graphite/webapp/content/
-        <Location "/content/">
+        Alias <%= @content_alias %> <%= @content_path %>
+        <Location "<%= @content_alias %>">
                 SetHandler None
         </Location>
 
@@ -45,14 +48,14 @@ WSGISocketPrefix run/wsgi
         # must change @DJANGO_ROOT@ to be the path to your django
         # installation, which is probably something like:
         # /usr/lib/python2.6/site-packages/django
-        Alias /media/ "/usr/lib/python2.7/dist-packages/django/contrib/admin/media/"
-        <Location "/media/">
+        Alias <%= @media_alias %> "<%= @media_path %>"
+        <Location "<%= @media_alias %>">
                 SetHandler None
         </Location>
 
         # The graphite.wsgi file has to be accessible by apache. It won't
         # be visible to clients because of the DocumentRoot though.
-        <Directory /var/lib/graphite/conf/>
+        <Directory <%= @wsgi_import_script_path %>>
                 Order deny,allow
                 Allow from all
         </Directory>

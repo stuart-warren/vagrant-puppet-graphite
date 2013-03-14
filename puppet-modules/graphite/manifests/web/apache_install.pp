@@ -1,13 +1,136 @@
 # Install apache version of graphite
 class graphite::web::apache_install(
 
+    $apache_user               = $graphite::web::params::apache_user,
+    $apache_group              = $graphite::web::params::apache_group,
+    $apache_site               = $graphite::web::params::apache_site,
+    $graphite_python_path      = $graphite::web::params::graphite_python_path,
 
-    ){
+    $name_virtual_host         = $graphite::web::params::name_virtual_host,
+    $wsgi_socket_prefix        = $graphite::web::params::wsgi_socket_prefix,
+    $server_name               = $graphite::web::params::server_name,
+    $document_root             = $graphite::web::params::document_root,
+    $error_log                 = $graphite::web::params::error_log,
+    $custom_log                = $graphite::web::params::custom_log,
+    $wsgi_daemon_process       = $graphite::web::params::wsgi_daemon_process,
+    $wsgi_process_group        = $graphite::web::params::wsgi_process_group,
+    $wsgi_application_group    = $graphite::web::params::wsgi_application_group,
+    $wsgi_import_script_path   = $graphite::web::params::wsgi_import_script_path,
+    $wsgi_import_script        = $graphite::web::params::wsgi_import_script,
+    $wsgi_script_alias         = $graphite::web::params::wsgi_script_alias,
+    $content_alias             = $graphite::web::params::content_alias,
+    $content_path              = $graphite::web::params::content_path,
+    $media_alias               = $graphite::web::params::media_alias,
+    $media_path                = $graphite::web::params::media_path,
 
-    include 'graphite::common::install'
+    $timezone                  = $graphite::web::params::timezone,
+    $documentation_url         = $graphite::web::params::documentation_url,
+    $log_rendering_performance = $graphite::web::params::log_rendering_performance,
+    $log_cache_performance     = $graphite::web::params::log_cache_performance,
+    $log_metric_access         = $graphite::web::params::log_metric_access,
+    $debug_error_pages         = $graphite::web::params::debug_error_pages,
+    $flush_rrd_cached          = $graphite::web::params::flush_rrd_cached,
+    $memcache_hosts            = $graphite::web::params::memcache_hosts,
+    $memcache_default_duration = $graphite::web::params::memcache_default_duration,
+    $conf_dir                  = $graphite::web::params::conf_dir,
+    $storage_dir               = $graphite::web::params::storage_dir,
+    $content_dir               = $graphite::web::params::content_dir,
+    $dashboard_conf            = $graphite::web::params::dashboard_conf,
+    $graph_templates_conf      = $graphite::web::params::graph_templates_conf,
+    $whisper_dir               = $graphite::web::params::whisper_dir,
+    $rrd_dir                   = $graphite::web::params::rrd_dir,
+    $data_dirs                 = $graphite::web::params::data_dirs,
+    $log_dir                   = $graphite::web::params::log_dir,
+    $index_file                = $graphite::web::params::index_file,
+    $email_backend             = $graphite::web::params::email_backend,
+    $email_host                = $graphite::web::params::email_host,
+    $email_port                = $graphite::web::params::email_port,
+    $email_host_user           = $graphite::web::params::email_host_user,
+    $email_host_password       = $graphite::web::params::email_host_password,
+    $email_use_tls             = $graphite::web::params::email_use_tls,
+    $use_ldap_auth             = $graphite::web::params::use_ldap_auth,
+    $ldap_uri                  = $graphite::web::params::ldap_uri,
+    $ldap_search_base          = $graphite::web::params::ldap_search_base,
+    $ldap_base_user            = $graphite::web::params::ldap_base_user,
+    $ldap_base_password        = $graphite::web::params::ldap_base_password,
+    $ldap_user_query           = $graphite::web::params::ldap_user_query,
+    $use_remote_user_auth      = $graphite::web::params::use_remote_user_auth,
+    $login_url                 = $graphite::web::params::login_url,
+    $db_name                   = $graphite::web::params::db_name,
+    $db_engine                 = $graphite::web::params::db_engine,
+    $db_user                   = $graphite::web::params::db_user,
+    $db_password               = $graphite::web::params::db_password,
+    $db_host                   = $graphite::web::params::db_host,
+    $db_port                   = $graphite::web::params::db_port,
+    $cluster_servers           = $graphite::web::params::cluster_servers,
+    $cluster_fetch_timeout     = $graphite::web::params::cluster_fetch_timeout,
+    $cluster_find_timeout      = $graphite::web::params::cluster_find_timeout,
+    $cluster_retry_delay       = $graphite::web::params::cluster_retry_delay,
+    $cluster_cache_duration    = $graphite::web::params::cluster_cache_duration,
+    $remote_rendering          = $graphite::web::params::remote_rendering,
+    $remote_rendering_hosts    = $graphite::web::params::remote_rendering_hosts,
+    $remote_render_con_timeout = $graphite::web::params::remote_render_con_timeout,
+    $local_carbon_instances    = $graphite::web::params::local_carbon_instances,
+    $local_carbon_timeout      = $graphite::web::params::local_carbon_timeout,
 
-    package { [ 'python-graphite-web',
-                'libapache2-mod-wsgi',
+    ) inherits graphite::web::params {
+
+    class {'graphite::web::install':
+        user                      => $apache_user,
+        group                     => $apache_group,
+        graphite_python_path      => $graphite_python_path,
+        timezone                  => $timezone,
+        documentation_url         => $documentation_url,
+        log_rendering_performance => $log_rendering_performance,
+        log_cache_performance     => $log_cache_performance,
+        log_metric_access         => $log_metric_access,
+        debug_error_pages         => $debug_error_pages,
+        flush_rrd_cached          => $flush_rrd_cached,
+        memcache_hosts            => $memcache_hosts,
+        memcache_default_duration => $memcache_default_duration,
+        conf_dir                  => $conf_dir,
+        storage_dir               => $storage_dir,
+        content_dir               => $content_dir,
+        dashboard_conf            => $dashboard_conf,
+        graph_templates_conf      => $graph_templates_conf,
+        whisper_dir               => $whisper_dir,
+        rrd_dir                   => $rrd_dir,
+        data_dirs                 => $data_dirs,
+        log_dir                   => $log_dir,
+        index_file                => $index_file,
+        email_backend             => $email_backend,
+        email_host                => $email_host,
+        email_port                => $email_port,
+        email_host_user           => $email_host_user,
+        email_host_password       => $email_host_password,
+        email_use_tls             => $email_use_tls,
+        use_ldap_auth             => $use_ldap_auth,
+        ldap_uri                  => $ldap_uri,
+        ldap_search_base          => $ldap_search_base,
+        ldap_base_user            => $ldap_base_user,
+        ldap_base_password        => $ldap_base_password,
+        ldap_user_query           => $ldap_user_query,
+        use_remote_user_auth      => $use_remote_user_auth,
+        login_url                 => $login_url,
+        db_name                   => $db_name,
+        db_engine                 => $db_engine,
+        db_user                   => $db_user,
+        db_password               => $db_password,
+        db_host                   => $db_host,
+        db_port                   => $db_port,
+        cluster_servers           => $cluster_servers,
+        cluster_fetch_timeout     => $cluster_fetch_timeout,
+        cluster_find_timeout      => $cluster_find_timeout,
+        cluster_retry_delay       => $cluster_retry_delay,
+        cluster_cache_duration    => $cluster_cache_duration,
+        remote_rendering          => $remote_rendering,
+        remote_rendering_hosts    => $remote_rendering_hosts,
+        remote_render_con_timeout => $remote_render_con_timeout,
+        local_carbon_instances    => $local_carbon_instances,
+        local_carbon_timeout      => $local_carbon_timeout,
+    }
+
+    package { [ 'libapache2-mod-wsgi',
                 'memcached']:
         ensure  => latest,
         require => Exec['apt-get update'],
@@ -19,7 +142,7 @@ class graphite::web::apache_install(
         require => Package['libapache2-mod-wsgi'],
     }
 
-    file { '/etc/apache2/sites-available/default':
+    file { $apache_site:
         ensure  => present,
         content => template('graphite/web/graphite.apache2.erb'),
         owner   => 'root',
@@ -35,7 +158,7 @@ class graphite::web::apache_install(
         require => Package['libapache2-mod-wsgi'],
     }
 
-    file { '/var/lib/graphite/conf/graphite.wsgi':
+    file { $wsgi_import_script:
         ensure  => present,
         content => template('graphite/web/graphite.wsgi.erb'),
         owner   => 'root',
@@ -43,49 +166,6 @@ class graphite::web::apache_install(
         require => [File['/etc/apache2/run'],
                     Package['python-graphite-web']],
         notify  => Service['apache2'],
-    }
-
-    file { '/usr/share/pyshared/graphite/local_settings.py':
-        ensure  => present,
-        content => template('graphite/web/local_settings.py.erb'),
-        owner   => 'root',
-        group   => 'root',
-        require => Package['python-graphite-web'],
-    }
-
-    file { '/var/lib/graphite/storage/index':
-        ensure  => present,
-        owner   => 'www-data',
-        group   => 'www-data',
-        require => Package['python-graphite-web'],
-    }
-
-    file { '/var/lib/graphite/storage/':
-        ensure  => directory,
-        owner   => 'www-data',
-        group   => 'www-data',
-        require => Package['python-graphite-web'],
-    }
-
-    file { '/var/lib/graphite/storage/log/webapp/':
-        ensure  => directory,
-        owner   => 'www-data',
-        group   => 'www-data',
-        require => Package['python-graphite-web'],
-    }
-
-    exec { 'syncdb':
-        command => '/usr/bin/python /usr/lib/python2.7/dist-packages/graphite/manage.py syncdb --noinput',
-        cwd     => '/usr/lib/python2.7/dist-packages/graphite',
-        require => Package['python-graphite-web'],
-    }
-
-    file { '/var/lib/graphite/storage/graphite.db':
-        ensure  => present,
-        owner   => 'www-data',
-        group   => 'www-data',
-        mode    => '0664',
-        require => Exec['syncdb'],
     }
 
 
