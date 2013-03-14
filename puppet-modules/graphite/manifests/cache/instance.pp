@@ -9,6 +9,7 @@ define graphite::cache::instance (
         $log_dir                    = ['/var/lib/graphite/storage/log/carbon/'],
         $pid_dir                    = ['/var/run'],
         $user                       = ['www-data'],
+        $group                      = ['www-data'],
         $max_cache_size             = ['inf'],
         $max_updates_per_second     = ['500'],
         $max_creates_per_minute     = ['50'],
@@ -76,6 +77,7 @@ define graphite::cache::instance (
         ensure    => directory,
         path      => $local_data_dir,
         owner     => $user,
+        group     => $group,
         require   => Package['python-carbon'],
     }
 

@@ -7,6 +7,7 @@ define graphite::relay::instance (
         $log_dir                    = ['/var/lib/graphite/storage/log/carbon/'],
         $pid_dir                    = ['/var/run'],
         $user                       = ['www-data'],
+        $group                      = ['www-data'],
         $instance_name              = ['default'],
         $line_receiver_interface    = ['0.0.0.0'],
         $line_receiver_port         = ['2013'],

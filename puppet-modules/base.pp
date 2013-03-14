@@ -3,7 +3,7 @@ class base {
     graphite::relay::instance{ 'default':
         conf_file               => '/home/vagrant/relay.conf',
         line_receiver_port      => ['2013'],
-        destinations            => [['127.0.0.1:2004'],['127.0.0.1:2006'],['127.0.0.1:2008']],
+        destinations            => [['127.0.0.1:2004:default'],['127.0.0.1:2006:b'],['127.0.0.1:2008:c']],
     }
 
     graphite::cache::instance{ 'default':

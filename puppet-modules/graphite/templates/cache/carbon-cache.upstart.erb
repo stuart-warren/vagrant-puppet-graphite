@@ -6,5 +6,10 @@ description "carbon-cache-worker"
 respawn
 respawn limit 10 5
 
-exec /usr/bin/python /usr/bin/carbon-cache.py --config="<%= @conf_file %>" --debug --instance=<%= @instance %> start 2>&1 >/tmp/carbon-cache-<%= @vip %>-<%= @instance %>
+pre-start script
+	mkdir -p <%= @log_dir %>
+	chown <%= @user %>:<%= @group %> <%= @log_dir %>
+end script
+
+exec /usr/bin/python /usr/bin/carbon-cache.py --config="<%= @conf_file %>" --debug --instance=<%= @instance %> start 2>&1 ><%= @log_dir %>/carbon-cache-<%= @vip %>-<%= @instance %>.console.log
 
