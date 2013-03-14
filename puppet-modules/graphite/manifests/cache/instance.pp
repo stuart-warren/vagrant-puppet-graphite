@@ -81,15 +81,6 @@ define graphite::cache::instance (
         require   => Package['python-carbon'],
     }
 
-    file { "${vip}-cache-init-script":
-        ensure    => present,
-        path      => "/usr/local/sbin/carbon-cache-${title}.sh",
-        owner     => 'root',
-        group     => 'root',
-        mode      => '0755',
-        content   => template('graphite/cache/carbon-cache.init'),
-    }
-
     graphite::cache::cache_service{ $instance_name:
         vip       => $vip,
         require   => File["${vip}-local-data-dir"],

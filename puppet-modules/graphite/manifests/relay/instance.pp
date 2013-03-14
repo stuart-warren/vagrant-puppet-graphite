@@ -46,15 +46,6 @@ define graphite::relay::instance (
         require   => Package['python-carbon'],
     }
 
-    file { "${vip}-relay-init-script":
-        ensure    => present,
-        path      => "/usr/local/sbin/carbon-relay-${vip}.sh",
-        owner     => 'root',
-        group     => 'root',
-        mode      => '0755',
-        content   => template('graphite/relay/carbon-relay.init'),
-    }
-
     graphite::relay::relay_service{ $instance_name:
         vip       => $vip,
         require   => File["${vip}-local-data-dir"],
