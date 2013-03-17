@@ -18,4 +18,4 @@ TODO:
 - [x] Finish the graphite-web classes so they can be customised #2
 - [x] Remove unneeded start scripts #3
 - [ ] Investigate upstart not using --debug to start carbon-cache without loosing pid
-- [ ] Upload debs somewhere
+- [x] Upload debs somewhere
