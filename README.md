@@ -10,8 +10,6 @@ I require the ability to create multiple instances of carbon for different teams
 Carbon daemons can be started with 
  sudo start carbon-cache-default-<instancename>
 
-Currently you will need to supply your own .debs which mostly install to /var/lib/graphite/ rather than /opt/graphite/
-
 TODO:
 
 - [x] Make carbon-relay do the same as carbon-cache #1
