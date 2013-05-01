@@ -5,6 +5,7 @@ class graphite::web::apache_install(
     $apache_group              = $graphite::web::params::apache_group,
     $apache_site               = $graphite::web::params::apache_site,
     $graphite_python_path      = $graphite::web::params::graphite_python_path,
+    $listen_ipaddress          = $graphite::web::params::listen_ipaddress,
 
     $name_virtual_host         = $graphite::web::params::name_virtual_host,
     $wsgi_socket_prefix        = $graphite::web::params::wsgi_socket_prefix,
@@ -79,6 +80,7 @@ class graphite::web::apache_install(
         user                      => $apache_user,
         group                     => $apache_group,
         graphite_python_path      => $graphite_python_path,
+        listen_ipaddress          => $listen_ipaddress,
         timezone                  => $timezone,
         documentation_url         => $documentation_url,
         log_rendering_performance => $log_rendering_performance,

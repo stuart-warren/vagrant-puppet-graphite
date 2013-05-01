@@ -18,4 +18,22 @@ Vagrant::Config.run do |config|
     end
   end
 
+  # config.vm.define :graphiteb do |graphiteb_config|
+  #   graphiteb_config.vm.box = "precise64"
+  #   graphiteb_config.vm.host_name = "graphiteb"
+  #   # Set up your network as you like
+  #   #graphiteb_config.vm.network :bridged
+  #   graphiteb_config.vm.network :hostonly, "192.168.10.22"
+  #   FileUtils.mkdir_p(File.join('cache','apt','partial')) unless Dir.exists?(File.join('cache','apt','partial'))
+  #   graphiteb_config.vm.share_folder('apt-cache','/var/cache/apt/archives','cache/apt')
+  #   # Set the Timezone to something useful
+  #   graphiteb_config.vm.provision :shell, :inline => "echo \"Europe/London\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
+  #   graphiteb_config.vm.provision :puppet do  |puppet|
+  #     puppet.manifests_path = "puppet-modules"
+  #     puppet.manifest_file = "base.pp"
+  #     puppet.module_path = "puppet-modules"
+  #   # puppet.options = "--verbose --debug"
+  #   end
+  # end
+
 end

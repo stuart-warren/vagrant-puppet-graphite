@@ -3,6 +3,8 @@ class graphite::web::install(
     $user                      = $graphite::web::params::user,
     $group                     = $graphite::web::params::group,
     $graphite_python_path      = $graphite::web::params::graphite_python_path,
+    $listen_ipaddress          = $graphite::web::params::listen_ipaddress,
+    
     $timezone                  = $graphite::web::params::timezone,
     $documentation_url         = $graphite::web::params::documentation_url,
     $log_rendering_performance = $graphite::web::params::log_rendering_performance,

@@ -27,6 +27,7 @@ By default: (see Vagrantfile and puppet-modules/base.pp)
 - IP is 192.168.10.21
 - Starts 1 carbon relay, spreading metrics over 3 carbon caches
 - You can send metrics to the relay on port 2013
+- You can uncomment sections in the above files to enable a second graphite server in a cluster
 
 TODO:
 

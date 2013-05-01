@@ -6,6 +6,7 @@ class graphite::web::params {
     $user                      = 'www-data'
     $group                     = 'www-data'
     $graphite_python_path      = '/usr/share/pyshared/graphite'
+    $listen_ipaddress          = $ipaddress_eth1
 
     # Apache-WSGI
     $name_virtual_host         = '*:80'

@@ -167,7 +167,7 @@ DATABASES = {
 # remote server in the cluster. These servers must each have local access to
 # metric data. Note that the first server to return a match for a query will be
 # used.
-CLUSTER_SERVERS = [<%= @cluster_servers.collect{|x| '"' + x + '"'}.join(', ') %>]
+CLUSTER_SERVERS = [<%= @cluster_servers.delete_if{|i| i == @listen_ipaddress }.collect{|x| '"' + x + '"'}.join(', ') %>]
 
 ## These are timeout values (in seconds) for requests to remote webapps
 REMOTE_STORE_FETCH_TIMEOUT = <%= @cluster_fetch_timeout %>   # Timeout to fetch series data

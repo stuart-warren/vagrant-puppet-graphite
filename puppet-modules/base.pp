@@ -15,8 +15,10 @@ class base {
         cache_query_port        => ['7002'   ,'7102','7202'],
     }
 
-    class {'graphite::web::apache_install': 
-    	timezone                => 'Europe/London',
+    class {'graphite::web::apache_install':
+        timezone                => 'Europe/London',
+    #    cluster_servers         => ['192.168.10.21', '192.168.10.22'],
+    #    memcache_hosts          => ['192.168.10.21:11211', '192.168.10.22:11211']
     }
 }
 include base
