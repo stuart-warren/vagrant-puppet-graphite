@@ -8,7 +8,7 @@ Currently module only tested to work on Ubuntu 12.04
 I require the ability to create multiple instances of carbon for different teams, potentially listening on different virtual network interfaces which can then be moved onto other servers without issue.
 
 Carbon daemons can be started with 
- sudo start carbon-cache-default-<instancename>
+ sudo start carbon-cache-default-[instancename]
 
 TODO:
 
