@@ -15,6 +15,8 @@ class base {
         cache_query_port        => ['7002'   ,'7102','7202'],
     }
 
-    class {'graphite::web::apache_install': }
+    class {'graphite::web::apache_install': 
+    	timezone                => 'Europe/London',
+    }
 }
 include base
